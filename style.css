@@ -159,7 +159,7 @@ input:focus{
 }
 
 .bio-container { 
-  display: none;
+  /*display: none;*/
   background-color: #fff; 
   padding: 25px 20px; 
   position: relative; 

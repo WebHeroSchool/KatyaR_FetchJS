@@ -17,7 +17,7 @@ const buttonOnClick = () => {
   fetch('https://api.github.com/users/' + username)
   .then(res => res.json())
   .then(json => {
-    document.getElementById('bioContainer').style.display = 'block';
+    // document.getElementById('bioContainer').style.display = 'block';
     if (json.login == undefined) {
       document.getElementById('ok').style.display = 'none';
       document.getElementById('err').style.display = 'block';
