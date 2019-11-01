@@ -1,18 +1,57 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Alena</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <div>
-      <img class="logo" id="avatar" src="" alt="Logo">
-    </div>
-    <div>
-      <p><a href="" id="name"></a></p>
-      <p id="bio"></p>
-    </div>
-    <script type="text/javascript" src="script.js">></script>
-  </body>
+  	<head>
+	    <meta charset="utf-8">
+	    <title>WebHeroSchool</title>
+	    <link rel="stylesheet" href="fonts.css">
+	    <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+	    <section>
+	     	<div class="api-section">
+		        <div class="container">
+		          	<div class="header zoomIn">
+		          		<a href="index.html"><h2>API Github</h2></a>
+						
+					</div>
+		          	
+		          	<div class="row">
+						<div class="col avatar">
+							<div class="img-frame">
+									<a href="" class="img" id="userLink" target="_blank">
+										<img src="img/github-logo.png" id="avatar" alt="Profile photo">
+									</a>
+							</div> <!--/img-->
+						</div> <!-- /col .avatar -->
+						
+						<div class="col bio">
+							<div>
+								<input id="name" name="name" type="text" placeholder="Nickname">
+							</div>
+							<div class="button">
+								<a id="button">get info</a>
+							</div> <!-- /.button -->
+							<div class="bio-container" id="bioContainer">
+								<div id="ok">
+									<h4 class="bio-title">User</a></h4>
+									<a class="bio" id="user" target="_blank"></a>
+									<h4 class="bio-title">Bio</a></h4>
+									<p class="bio" id="bio"></p>
+								</div>
+								<div id="error">
+									<p class="bio" id="err"></p>
+								</div>
+							</div>
+							
+						</div>	<!-- /.col bio -->
+					</div> <!-- /.row -->
+
+					
+
+		        </div> <!-- class="container" -->
+	      	</div>  <!-- class="api-section" -->
+	    </section>
+
+    	<script type="text/javascript" src="script.js">></script>
+  	</body>
 </html>
