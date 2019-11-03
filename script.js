@@ -19,12 +19,20 @@ const reverseElements = (elem1, elem2) => {
   showElement(elem2);
 };
 
-const showError = () => {
+const clearPage = () => {
+  let user = elementId('user');
+  let bio = elementId('bio');
   let avatar = elementId('avatar');
   let avatarLink = elementId('userLink');
+  user.innerHTML = '';
+  bio.innerHTML = '';
   avatar.src = 'img/github-logo.png';
   avatarLink.removeAttribute('href');
   avatarLink.removeAttribute('target');
+};
+
+const showError = () => {
+  clearPage();
   reverseElements(elementOk, elementErr);
 };
 
@@ -45,6 +53,8 @@ const buttonOnClick = () => {
   const nickname = document.getElementById('name').value;
 
   if (nickname == undefined || nickname == '') {
+    clearPage();
+    reverseElements(elementErr, elementOk);
     return;
   };
 
