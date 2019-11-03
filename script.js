@@ -1,62 +1,78 @@
 
-const button = document.getElementById("button");
+const button = document.getElementById('button');
+const elementId = (name) => document.getElementById(name);
+const elementOk = elementId('ok');
+const elementErr = elementId('err');
 
-const buttonOnClick = () => {
-
-  let nickname = document.getElementById('name').value;
-  let username = getUsername(window.location.search);
-
-  if ((nickname != "") &&  (nickname != username)) { 
-    setUsername(nickname);
-  };
-  
-  if (username == undefined || username == "") {
-    username = 'KatyaRyazantseva';
-  };
-  
-  fetch('https://api.github.com/users/' + username)
-  .then(res => res.json())
-  .then(json => {
-    // document.getElementById('bioContainer').style.display = 'block';
-    if (json.login == undefined) {
-      document.getElementById('ok').style.display = 'none';
-      document.getElementById('err').style.display = 'block';
-      document.getElementById('err').innerHTML = 'Информация о пользователе недоступна';
-    } else {
-      let name = document.getElementById('name');
-      if (name.value != json.login) {name.value = json.login};
-      document.getElementById('ok').style.display = 'block';
-      document.getElementById('err').style.display = 'none';
-      let user = document.getElementById('user');
-      user.innerHTML = json.name;
-      user.href = json.html_url;
-      document.getElementById('bio').innerHTML = json.bio;
-      document.getElementById('avatar').src = json.avatar_url;
-      document.getElementById('userLink').href = json.html_url;
-    }
-  })
-  .catch(err => {
-    document.getElementById('bioContainer').style.display = 'block';
-    document.getElementById('ok').style.display = 'none';
-    document.getElementById('err').style.display = 'block';
-    document.getElementById('err').innerHTML = 'Информация о пользователе недоступна';
-  });
+const showElement = (elem) => {
+  elem.classList.remove('hidden');
+  elem.classList.add('visible');  
 };
 
-button.addEventListener('click', buttonOnClick);
-
-function setUsername(nickname) {
-  let pageURL = window.location;
-  window.location.href = pageURL.origin + pageURL.pathname + '?username=' + nickname;
+const hideElement = (elem) => {
+  elem.classList.remove('visible');
+  elem.classList.add('hidden');  
 };
 
-function getUsername(urlStr) {
-  if (urlStr == "") {
-    return "";
+const reverseElements = (elem1, elem2) => {
+  hideElement(elem1);
+  showElement(elem2);
+};
+
+const showError = () => {
+  let avatar = elementId('avatar');
+  let avatarLink = elementId('userLink');
+  avatar.src = 'img/github-logo.png';
+  avatarLink.removeAttribute('href');
+  avatarLink.removeAttribute('target');
+  reverseElements(elementOk, elementErr);
+};
+
+const setUsername = (nickname) => window.history.pushState({}, '', '?username=' + nickname);
+
+const getUsername = (urlStr) => {
+  if (urlStr == '') {
+    return '';
   };
   let arr = urlStr.split('=');
   if (arr.length >= 2 && (~arr[0].indexOf('username') != -1)) { 
     return arr[1]; 
   }; 
-  return "";
-}
+  return '';
+};
+
+const buttonOnClick = () => {
+  const nickname = document.getElementById('name').value;
+
+  if (nickname == undefined || nickname == '') {
+    return;
+  };
+
+  setUsername(nickname);
+  let username = getUsername(window.location.search);
+
+  fetch('https://api.github.com/users/' + username)
+    .then(res => res.json())
+    .then(json => {
+      if (json.login == undefined) {
+        showError();
+      } else {
+        let user = elementId('user');
+        let bio = elementId('bio');
+        let avatar = elementId('avatar');
+        let linkElements = document.querySelectorAll('.userLink');
+        user.innerHTML = json.name;
+        bio.innerHTML = json.bio;
+        avatar.src = json.avatar_url;
+        linkElements.forEach(linkElement => {
+          linkElement.href = json.html_url;
+          linkElement.target = '_blank';
+        });
+        reverseElements(elementErr, elementOk);
+      };
+    })
+    .catch(err => showError());
+};
+
+button.addEventListener('click', buttonOnClick);
+
