@@ -50,16 +50,20 @@ const getUsername = (urlStr) => {
 };
 
 const buttonOnClick = () => {
+
   const nickname = document.getElementById('name').value;
+  let username = getUsername(window.location.search);
 
   if (nickname == undefined || nickname == '') {
-    clearPage();
-    reverseElements(elementErr, elementOk);
-    return;
+    if (username == '') {
+      clearPage();
+      reverseElements(elementErr, elementOk);
+      return;
+    } 
+  } else {
+    setUsername(nickname);
+    username = getUsername(window.location.search);
   };
-
-  setUsername(nickname);
-  let username = getUsername(window.location.search);
 
   fetch('https://api.github.com/users/' + username)
     .then(res => res.json())
@@ -86,3 +90,4 @@ const buttonOnClick = () => {
 
 button.addEventListener('click', buttonOnClick);
 
+window.onload = buttonOnClick();
