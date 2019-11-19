@@ -22,12 +22,15 @@
 							</div> 
 						</div> 
 						<div class="col bio">
-							<div>
-								<input id="name" name="name" type="text" placeholder="Enter nickname on Github">
-							</div>
-							<div class="button">
-								<a id="button">get info</a>
-							</div> 
+							<form method="post" action="" id="form">
+								<div>
+									<input id="name" name="name" type="text" placeholder="Enter nickname on Github">
+								</div>
+								<div class="button-wrap">
+									<input class="button" id="button" type="submit" value="get info"/>
+									<!-- <a class="button" id="button">get info</a> -->
+								</div> 
+							</form>
 							<div class="bio-container fadeInUp second" id="bioContainer">
 								<div class="loader hidden" id="loader">
 									<div class="sk-folding-cube">

@@ -4,6 +4,9 @@ const button = document.getElementById('button');
 const elementId = (name) => document.getElementById(name);
 const elementOk = elementId('ok');
 const elementErr = elementId('err');
+const elementLoader = elementId('loader');
+  let elementDate = elementId('date');
+
 
 /*-------------Username handling-------------*/
 
@@ -20,6 +23,8 @@ const getUsername = (urlStr) => {
   }; 
   return('');
 };
+
+const clearUsername = () => window.history.pushState({}, '', 'index.html');
 
 /*-------------Result window-------------*/
 
@@ -39,8 +44,8 @@ const reverseElements = (elem1, elem2) => {
 };
 
 const setDate = (date) => {
-  let elemDate = elementId('date');
-  elemDate.innerHTML = date.toLocaleDateString();
+  showElement(elementDate);
+  elementDate.innerHTML = date.toLocaleDateString();
 };
 
 const clearPage = () => {
@@ -53,6 +58,7 @@ const clearPage = () => {
   avatar.src = 'img/github-logo.png';
   avatarLink.removeAttribute('href');
   avatarLink.removeAttribute('target');
+  elementDate.innerHTML = '';
 };
 
 const showError = () => {
@@ -86,10 +92,10 @@ const getGithubUser = (apiUrl) => new Promise((resolve, reject) => {
     });
  });
 
-const getDate = new Promise((resolve, reject) => {
+const getCurDate = () => new Promise((resolve, reject) => {
   setTimeout(() => {
-    resolve(new Date); 
-    reject ('Date error')
+    const currentDate = new Date;
+    currentDate ? resolve(currentDate): reject ('Date error')
   }, 3000);
 });
 
@@ -97,54 +103,45 @@ const getDate = new Promise((resolve, reject) => {
 
 const buttonOnClick = () => {
 
+  clearPage();
   const nickname = document.getElementById('name').value;
   let username = getUsername(window.location.search);
 
   if (nickname == undefined || nickname == '') {
-    if (username == '') {
-      clearPage();
+      clearUsername();
       reverseElements(elementErr, elementOk);
       return;
-    } 
   };
 
   setUsername(nickname);
   username = getUsername(window.location.search);
-  apiUrl = apiUrl + username;
+  let url = apiUrl + username;
 
-  Promise.all([getGithubUser(apiUrl), getDate])
-  .then(([res, date]) => {
-    setDate(date);
-    res.json();
+  hideElement(elementOk);
+  hideElement(elementErr);
+  showElement(elementLoader);
+
+  Promise.all([getGithubUser(url), getCurDate()])
+  .then(([res, curdate]) => {
+    hideElement(elementLoader);
+    showElement(elementOk);
+    setDate(curdate);
+    return res.json();
   })
-    .then(json => {
-      if (json.login == undefined) {
-        showError();
-      } else {
-        showResult(json);
-      };
-    });
-    
+  .then(json => {
+    if (json.login == undefined) {
+      showError();
+    } else {
+      showResult(json);
+    };
+  })
+  .catch(() => {
+    hideElement(elementLoader);
+    showError();
+  });
 };
 
 /*-------------Main program-------------*/
 
 button.addEventListener('click', buttonOnClick);
 
-window.onload = buttonOnClick();
-
-/*------------------Preloader------------------*/
-// window.onload = () => {
-//   let loader = document.querySelectorAll('.loader');
-//   loader.delay(1000);
-// };
-
-// $(window).on( 'load', function(){
-
-//   $(".loader").delay(1000).fadeOut("slow");
-  // $(".content_name .hello").addClass('animated zoomIn');
-  // $(".content_name .name").addClass('animated zoomIn');
-  // $(".content_prof p").addClass('animated zoomIn');
-  // $(".content_download p").addClass('animated zoomIn');
-
-// });
