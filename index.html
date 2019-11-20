@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  	<head>
+	    <meta charset="utf-8">
+	    <title>WebHeroSchool</title>
+	    <link rel="stylesheet" href="fonts.css">
+	    <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+	    <section>
+	     	<div class="api-section">
+		        <div class="container">
+		        	<div class="header zoomIn">
+		          		<a href="index.html"><h2 class="headerH2">API Github</h2></a>						
+					</div>
+		          	<div class="row">
+						<div class="col avatar">
+							<div class="img-frame fadeInUp first">
+								<a class="img userLink" id="userLink">
+									<img src="img/github-logo.png" id="avatar" alt="Profile photo">
+								</a>
+							</div> 
+						</div> 
+						<div class="col bio">
+							<form method="post" action="" id="form">
+								<div>
+									<input id="name" name="name" type="text" placeholder="Enter nickname on Github">
+								</div>
+								<div class="button-wrap">
+									<input class="button" id="button" type="submit" value="get info"/>
+								</div> 
+							</form>
+							<div class="bio-container fadeInUp second" id="bioContainer">
+								<div class="loader hidden" id="loader">
+									<div class="sk-folding-cube">
+										<div class="sk-cube1 sk-cube"></div>
+										<div class="sk-cube2 sk-cube"></div>
+										<div class="sk-cube4 sk-cube"></div>
+										<div class="sk-cube3 sk-cube"></div>
+									</div>
+								</div>
+								<div class="visible" id="ok">
+									<h4 class="bio-title">User</a></h4>
+									<a class="bio userLink" id="user"></a>
+									<h4 class="bio-title">Bio</a></h4>
+									<p class="bio" id="bio"></p>
+									<p class="date" id="date"></p>
+								</div>
+								<div class="hidden" id="err">
+									<p class="bio">The information about the user is not available</p>
+								</div>
+							</div>
+						</div>	
+					</div> 
+		        </div> 
+	      	</div>  
+	    </section>
+    	<script type="text/javascript" src="script.js"></script>
+  	</body>
+</html>
