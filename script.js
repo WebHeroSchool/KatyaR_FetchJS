@@ -1,12 +1,11 @@
 
-let apiUrl = 'https://api.github.com/users/';
 const button = document.getElementById('button');
 const elementId = (name) => document.getElementById(name);
 const elementOk = elementId('ok');
 const elementErr = elementId('err');
 const elementLoader = elementId('loader');
-  let elementDate = elementId('date');
-
+let elementDate = elementId('date');
+let apiUrl = 'https://api.github.com/users/';
 
 /*-------------Username handling-------------*/
 
@@ -101,8 +100,9 @@ const getCurDate = () => new Promise((resolve, reject) => {
 
 /*-------------User actions-------------*/
 
-const buttonOnClick = () => {
+const buttonOnClick = (evt) => {
 
+  evt.preventDefault();
   clearPage();
   const nickname = document.getElementById('name').value;
   let username = getUsername(window.location.search);
@@ -143,5 +143,5 @@ const buttonOnClick = () => {
 
 /*-------------Main program-------------*/
 
-button.addEventListener('click', buttonOnClick);
+button.addEventListener('click', buttonOnClick, false);
 

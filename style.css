@@ -279,11 +279,6 @@ input:focus{
 }
 
 .sk-folding-cube {
-/*  left: 50%;
-  top: 60%;
-  position: absolute;
-  margin-top: -30px;
-  margin-left: -30px;*/
   margin: auto; 
   width: 40px;
   height: 40px;
